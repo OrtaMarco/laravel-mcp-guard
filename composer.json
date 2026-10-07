@@ -1,0 +1,64 @@
+{
+    "name": "ortamarco/laravel-mcp-guard",
+    "description": "Declarative per-token permissions for laravel/mcp servers: Sanctum abilities per tool/prompt/resource, hidden from the list, per-token rate limiting and an audit log of writes and denials.",
+    "keywords": ["laravel", "mcp", "model-context-protocol", "sanctum", "abilities", "permissions", "authorization", "rate-limit", "audit"],
+    "license": "MIT",
+    "type": "library",
+    "homepage": "https://github.com/OrtaMarco/laravel-mcp-guard",
+    "authors": [
+        {
+            "name": "Marco Orta",
+            "homepage": "https://ortamarco.me"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/OrtaMarco/laravel-mcp-guard/issues",
+        "source": "https://github.com/OrtaMarco/laravel-mcp-guard"
+    },
+    "require": {
+        "php": "^8.3",
+        "illuminate/contracts": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "laravel/mcp": "^1.0"
+    },
+    "require-dev": {
+        "laravel/sanctum": "^4.0",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OrtaMarco\\McpGuard\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OrtaMarco\\McpGuard\\Tests\\": "tests/"
+        },
+        "files": [
+            "tests/Fixtures/Fixtures.php"
+        ]
+    },
+    "suggest": {
+        "laravel/sanctum": "Required for token abilities (the guard denies users without tokenCan())."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OrtaMarco\\McpGuard\\McpGuardServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
