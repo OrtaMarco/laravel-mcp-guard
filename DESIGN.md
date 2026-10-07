@@ -43,8 +43,12 @@ config), enforced in the listing AND at call time, plus denied-call audit. Small
 
 OAuth/Passport scopes, human approval workflows, UI, a tool catalogue.
 
-## Open points (to resolve against the `laravel/mcp` source)
+## Verified against `laravel/mcp` v1.0.1 source
 
-- Exact `shouldRegister` signature/version in the supported `laravel/mcp` range.
-- Whether the attribute can be read without instantiating tools; whether a hook exists to
-  register the audit for hidden-tool calls (hence the middleware).
+- `Primitive::eligibleForRegistration()` calls `shouldRegister` via `Container::call` (no
+  arguments needed); `ServerContext` filters every list and every lookup with it, so a hidden
+  primitive is also uncallable ("Tool [x] not found." before `handle()`).
+- Because of that, a denied call never reaches the tool: auditing it needs HTTP middleware.
+- `Request::user()` goes through the auth user resolver; Sanctum's `tokenCan()` works as is.
+- Read-only hint is `Laravel\Mcp\Server\Tools\Annotations\IsReadOnly`.
+- Final scope: attribute + config map, trait, `mcp-guard` middleware (rate limit + audit event).

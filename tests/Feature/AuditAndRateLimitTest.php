@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Log;
 
 it('audits a successful write with the token name and redacted arguments', function (): void {
-    $headers = $this->bearer(['posts:write', 'posts:publish'], 'claude-wsl');
+    $headers = $this->bearer(['posts:write', 'posts:publish'], 'ci-agent');
 
     $this->rpc('tools/call', ['name' => 'publish-post', 'arguments' => ['id' => 7, 'api_key' => 'sk-123', 'nested' => ['Password' => 'x']]], $headers)
         ->assertJsonPath('result.content.0.text', 'published');
@@ -13,7 +13,7 @@ it('audits a successful write with the token name and redacted arguments', funct
 
     expect($event->tool)->toBe('publish-post')
         ->and($event->outcome)->toBe('called')
-        ->and($event->client)->toBe('claude-wsl')
+        ->and($event->client)->toBe('ci-agent')
         ->and($event->tokenId)->not->toBeNull()
         ->and($event->arguments)->toBe(['id' => 7, 'api_key' => '[redacted]', 'nested' => ['Password' => '[redacted]']]);
 });
